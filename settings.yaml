@@ -1,0 +1,26 @@
+settings:
+  PID: 
+    k_p: 100
+    k_d: 0
+    k_i: 0
+    k_b: 0
+
+  Timings:
+    Ts: 0
+
+  Weight:
+    Pin1: A2
+    Pin2: A3
+    min_V: 0
+    max_V: 10
+    min_g: 0
+    max_g: 10000
+
+  Temp:
+    Pin1: A2
+    min_V: 0
+    max_V: 10
+    min_g: 0
+    max_g: 10000
+    
+
