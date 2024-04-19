@@ -1,18 +1,15 @@
 #include "Arduino.h"
-#include "yamlReader.h"
+#include "settings.h"
 
 // Constructor implementation
-YamlReader::YamlReader(str name) {
+Settings::Settings() {
   
 }
 
 // Function to update weight from analog pin
-void YamlReader::update() {
+void Settings::update() {
   // Read analog value from the pin and map it to the weight range (adjust as needed)
   weight = map(analogRead(analogPin), 0, 1023, 0, 1000);
 }
 
-// Function to get the current weight
-int YamlReader::getWeight() {
-  return weight;
-}
+
