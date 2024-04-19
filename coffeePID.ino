@@ -1,17 +1,15 @@
 #include <U8g2lib.h>
-#include <SPI.h> 
-#include <LittleFS.h>
-#include <ArduinoYaml.h>
+#include <SPI.h>
 
 #include "pid.h"
 #include "scale.h"
 #include "temp.h"
-#include "yamlReader.h"
+//#include "settings.h"
 
-i18n_t i18n( &LittleFS );
 
-const int scalePin = A0;
-const int tempPin = A1;
+const int scalePin = A1;
+const int scalePin2 = A2;
+const int tempPin = A0;
 const long time = 1;
 const long k_p = 200;
 const long k_i = 0;
@@ -22,20 +20,20 @@ const long interval = 1000;
 
 int a = 0;
 
-Scale scale = Scale(scalePin);
+
+
+Scale scale = Scale(scalePin, scalePin2);
 Temp temp = Temp(tempPin);
 Pid pid = Pid(200, 0, 0, 0, 1);
 
 void setup() {
  Serial.begin(115200);
 
- LittleFS.begin();
-
- i18n.setLocale("settings");
 }
 
 void loop() {
 
+int weight [2] = {0 , 0};
 
 unsigned long currentMillis = millis();    
 
@@ -46,9 +44,11 @@ if (Ts >= interval) {
     
     scale.update();
     temp.update();
-    pid.error(100, scale.getWeight());
+    //pid.error(100, scale.getWeight());
     pid.CalculateOutput(Ts/1000);
-    Serial.println(Hello);
+    scale.getWeight();
+
+    //Serial.println(scale.getWeight());
     previousMillis = currentMillis;
     a++;}
     

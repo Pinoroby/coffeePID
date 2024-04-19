@@ -4,29 +4,44 @@
 #include "scale.h"
 
 // Constructor implementation
-Scale::Scale(int pin) {
-  analogPin = pin;
-  weight = 0;
+Scale::Scale(int pin, int pin2) {
+  analogPin[0] = pin;
+  analogPin[1] = pin2;
+  weight[0] = 0;
+  weight[1] = 0;
 
   min_in = 0;
-  min_out = 0;
-  max_in = 1023;
-  max_out = 5;
+  min_out = 1023;
+  max_in = 0;
+  max_out = 1023;
 
-
-  pinMode(analogPin, INPUT);
-
+  for (int i: analogPin)
+    pinMode(i, INPUT);
 }
 
 // Function to update weight from analog pin
 void Scale::update() {
   // Read analog value from the pin and map it to the weight range (adjust as needed)
-  weight = map(analogRead(analogPin), min_in, max_in, min_out, max_out);
+  int a = 0;
+  for (int i: analogPin) {
+    //weight[a] = map(analogRead(i), min_in, max_in, min_out, max_out);
+    weight[a] = analogRead(i);
+    a++;
+  }
+
 }
 
 // Function to get the current weight
-int Scale::getWeight() {
-  return weight;
+ void Scale::getWeight() {
+  
+  for (int i = 0; i < sizeof(analogPin)-2; i++) {
+    Serial.print("Weight ");
+    Serial.print(analogPin[i]);
+    Serial.print(" : ");
+    Serial.print(weight[i]);
+    Serial.println("");
+  }
+  Serial.println("-----------");
 }
 
 void Scale::adjustScale(long x_in, long x_out, long y_in, long y_out) {
@@ -37,13 +52,14 @@ void Scale::adjustScale(long x_in, long x_out, long y_in, long y_out) {
 
 }
 
-void Scale::changePin(int pin_num) {
+void Scale::changePin(int pin_num, int pin_num2) {
 
- analogPin = pin_num;
+ analogPin[0] = pin_num;
+ analogPin[1] = pin_num2;
 
 }
 
 
-int Scale::getPinNum() {
+int* Scale::getPinNum() {
   return analogPin;
 }
