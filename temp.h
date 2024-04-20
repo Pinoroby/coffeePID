@@ -4,14 +4,17 @@
 
 class Temp {
   // Member variables
-  int analogPin;
-  int weight;
+  byte pin;
+  float temp;
+  byte addressToRead;
+
+  MAX6675 *thermocouple;
 
   // Constructor ad member functions declaration
   public:
-    Temp(int pin); // Constructor with pin parameter
+    Temp(int thermoCLK, int thermoCS, int thermoDO); // Constructor with pin parameter
     void update(); // Function to update weight from analog pin
-    int getWeight();
+    int getTemp();
 };
 
 #endif

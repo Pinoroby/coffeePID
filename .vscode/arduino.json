@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
-    "programmer": "avrisp",
+    "programmer": "usbasp",
     "port": "COM5",
     "sketch": "coffeePID.ino"
 }

@@ -1,3 +1,7 @@
+#include <max6675.h>
+
+
+
 #include <U8g2lib.h>
 #include <SPI.h>
 
@@ -7,9 +11,9 @@
 //#include "settings.h"
 
 
-const int scalePin = A1;
-const int scalePin2 = A2;
-const int tempPin = A0;
+const int scalePin = A0;
+const int scalePin2 = A1;
+const byte tempPin = 10;
 const long time = 1;
 const long k_p = 200;
 const long k_i = 0;
@@ -23,11 +27,12 @@ int a = 0;
 
 
 Scale scale = Scale(scalePin, scalePin2);
-Temp temp = Temp(tempPin);
+Temp temp = Temp(6,5,4);
 Pid pid = Pid(200, 0, 0, 0, 1);
 
 void setup() {
  Serial.begin(115200);
+ SPI.begin();
 
 }
 
@@ -47,6 +52,7 @@ if (Ts >= interval) {
     //pid.error(100, scale.getWeight());
     pid.CalculateOutput(Ts/1000);
     scale.getWeight();
+    temp.getTemp();
 
     //Serial.println(scale.getWeight());
     previousMillis = currentMillis;
