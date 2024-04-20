@@ -2,6 +2,8 @@
 #define SETTINGS_H
 
 #include "Arduino.h"
+#include <ArduinoJson.h>
+
 
 class Settings {
   // Member variables
@@ -10,6 +12,8 @@ class Settings {
   public:
     // PID Settings
     
+    JsonDocument doc;
+
     long k_p = 100;
     long k_d = 0;
     long k_i = 0;
@@ -39,7 +43,11 @@ class Settings {
     long tempMin_g = 0;
     long tempMax_g = 10000;
 
+    // json data package settings
+
+
     void update();
+    String createString();
 
 };
 
